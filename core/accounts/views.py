@@ -20,10 +20,10 @@ class RegisterView(CreateView):
     template_name = 'accounts/register.html'
     success_url = '/admin'
     form_class = UserCreationForm
-    def dispatch(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return redirect(self.success_url)
-        return super(RegisterView,self).dispatch(*args, **kwargs)
+        return super(RegisterView,self).get(request, *args, **kwargs)
     def form_valid(self, form):
         user = form.save()
         login(self.request, user)  # کاربر را لاگین می کند.
