@@ -53,12 +53,14 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'core.urls'
 
+
+
 TEMPLATES_DIR = BASE_DIR / "templates"
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLATES_DIR],
         "APP_DIRS": True,
         'OPTIONS': {
             'context_processors': [
@@ -70,6 +72,9 @@ TEMPLATES = [
         },
     },
 ]
+
+
+
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
@@ -121,7 +126,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = 'media'
+
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'statics'
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

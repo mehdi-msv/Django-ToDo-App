@@ -1,0 +1,61 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo list</title>
+    <link rel = "preconnect" href = "https://fonts.googleapis.com">
+    <link rel = "preconnect" href = "https://fonts.gstatic.com" crossrigin>
+    <link href = "https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel = "stylesheet">
+    <link rel = "stylesheet" href = "{% static 'style.css' %}" />
+</head>
+<body>
+    <main class = "app">
+        <section class = "greeting">
+            <h2 class = "title">
+                What's up  {{tasks.user}}
+            </h2>
+        </section>
+
+        <section class = "create-todo">
+            <h3>Create your to do list</h3>
+            <form action="{% url 'todo:task-create' %}" method="post" id = "new-todo-form">
+                {% csrf_token %}
+                <input
+                type = "text"
+                name = "title"
+                id = "content"
+                placeholder = "write your task" />
+                <input type = "submit" value = "Add todo" />
+            </form>
+        </section>
+        <section class="todo-list">
+            <h3>Todo List</h3>
+            {% for task in tasks%}
+            <div class="list" id="todo-list">
+                <div class="todo-item">
+                    <label>
+                        <input type="checkbox">
+                        <span class="bubble business">
+                        </span>
+                    </label>
+                    <div class="todo-content">
+                        <input type="text" value="{{task.title}}" readonly="">
+                    </div>
+                    <div class="actions">
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="{% url 'todo:task-delete' task.id %}">Done</a></li>
+                            <li><a class="dropdown-item" href="{% url 'todo:task-update' task.id %}">Edit</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </section>
+
+    </main>
+    <script src = "{% static 'app.js' %}"></script>
+</body>
+</html>
