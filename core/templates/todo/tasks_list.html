@@ -11,6 +11,13 @@
 </head>
 <body>
     <main class="app">
+        <div class="todo-item">
+            <div class="actions">
+                <a href="{% url 'accounts:logout' %}">
+                <button class="delete">Logout</button>
+                </a>
+            </div>
+        </div>
         <section class="greeting">
             <h2 class="title">
                 {% for task in tasks|slice:":1" %}
@@ -45,10 +52,12 @@
                         <input type="text" value="{{ task.title }}">
                     </div>
                     <div class="actions">
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="{% url 'todo:task_delete' task.id %}">Delete</a></li>
-                            <li><a class="dropdown-item" href="{% url 'todo:task_update' task.id %}">Edit</a></li>
-                        </ul>
+                        <a href="{% url 'todo:task_update' task.id %}">
+                        <button class="edit">Edit</button>
+                        </a>
+                        <a href="{% url 'todo:task_delete' task.id %}">
+                        <button class="delete">Delete</button>
+                        </a>
                     </div>
                 </div>
                 {% else %}
@@ -63,10 +72,12 @@
                         <input type="text" value="{{ task.title }}">
                     </div>
                     <div class="actions">
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="{% url 'todo:task_delete' task.id %}">Delete</a></li>
-                            <li><a class="dropdown-item" href="{% url 'todo:task_update' task.id %}">Edit</a></li>
-                        </ul>
+                        <a href="{% url 'todo:task_update' task.id %}">
+                        <button class="edit">Edit</button>
+                        </a>
+                        <a href="{% url 'todo:task_delete' task.id %}">
+                        <button class="delete">Delete</button>
+                        </a>
                     </div>
                 </div>
                 {% endif %}
