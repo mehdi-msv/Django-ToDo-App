@@ -23,7 +23,7 @@ class TaskCompleteView(LoginRequiredMixin, UpdateView):
     Mark a task as complete or incomplete.
     '''
     model = Task
-    success_url = reverse_lazy('todo:tasks-list')
+    success_url = reverse_lazy('todo:tasks_list')
     def get(self, request, *args, **kwargs):
         task = get_object_or_404(Task, pk=kwargs.get('pk'))
         
@@ -38,7 +38,7 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
     '''
     model = Task
     fields = ['title']
-    success_url = reverse_lazy('todo:tasks-list')
+    success_url = reverse_lazy('todo:tasks_list')
     def form_valid(self, form):
         form.instance.user = self.request.user  # Set the user of the task to the current user
         return super(TaskCreateView,self).form_valid(form)
@@ -50,15 +50,16 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
     Update an existing task for the current user.
     '''
     model = Task
+    template_name = 'todo/task_update.html'
     fields = ['title']
-    success_url = reverse_lazy('todo:tasks-list')
+    success_url = reverse_lazy('todo:tasks_list')
 
 class TaskDeleteView(LoginRequiredMixin, DeleteView):
     '''
     Delete an existing task for the current user.
     '''
     model = Task
-    success_url = reverse_lazy('todo:tasks-list')
+    success_url = reverse_lazy('todo:tasks_list')
     def get(self, request, *args, **kwargs):
         return self.delete(request, *args, **kwargs)
 

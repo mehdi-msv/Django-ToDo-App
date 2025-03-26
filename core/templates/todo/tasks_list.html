@@ -1,4 +1,4 @@
-{%load static%}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,56 +6,74 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo list</title>
-    <link rel = "preconnect" href = "https://fonts.googleapis.com">
-    <link rel = "preconnect" href = "https://fonts.gstatic.com" crossrigin>
-    <link href = "https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel = "stylesheet">
-    <link rel = "stylesheet" href = "{% static 'style.css' %}" />
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
 </head>
 <body>
-    <main class = "app">
-        <section class = "greeting">
-            <h2 class = "title">
-                What's up  {{tasks.user}}
+    <main class="app">
+        <section class="greeting">
+            <h2 class="title">
+                {% for task in tasks|slice:":1" %}
+                What's up {{ task.user }}
+                {% endfor %}
+
             </h2>
         </section>
 
-        <section class = "create-todo">
+        <section class="create-todo">
             <h3>Create your to do list</h3>
-            <form action="{% url 'todo:task-create' %}" method="post" id = "new-todo-form">
+            <form action="{% url 'todo:task_create' %}" method="post" id="new-todo-form">
                 {% csrf_token %}
-                <input
-                type = "text"
-                name = "title"
-                id = "content"
-                placeholder = "write your task" />
-                <input type = "submit" value = "Add todo" />
+                <input type="text" name="title" id="content" placeholder="Write your task" />
+                <input type="submit" value="Add todo" />
             </form>
         </section>
+
         <section class="todo-list">
             <h3>Todo List</h3>
-            {% for task in tasks%}
-            <div class="list" id="todo-list">
-                <div class="todo-item">
+            {% for task in tasks %}
+            <div class="list" id="todo_list">
+                {% if task.complete %}
+                <div class="todo-item done">
                     <label>
-                        <input type="checkbox">
-                        <span class="bubble business">
-                        </span>
+                        <a href="{% url 'todo:task_complete' task.id %}">
+                        <input type="checkbox" class="task-checkbox" data-task-id="{{ task.id }}">
+                        <span class="bubble business"></span>
+                        </a>
                     </label>
                     <div class="todo-content">
-                        <input type="text" value="{{task.title}}" readonly="">
+                        <input type="text" value="{{ task.title }}">
                     </div>
                     <div class="actions">
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="{% url 'todo:task-delete' task.id %}">Done</a></li>
-                            <li><a class="dropdown-item" href="{% url 'todo:task-update' task.id %}">Edit</a></li>
+                            <li><a class="dropdown-item" href="{% url 'todo:task_delete' task.id %}">Delete</a></li>
+                            <li><a class="dropdown-item" href="{% url 'todo:task_update' task.id %}">Edit</a></li>
                         </ul>
                     </div>
                 </div>
+                {% else %}
+                <div class="todo-item">
+                    <label>
+                        <a href="{% url 'todo:task_complete' task.id %}">
+                        <input type="checkbox" class="task-checkbox" data-task-id="{{ task.id }}">
+                        <span class="bubble business"></span>
+                        </a>
+                    </label>
+                    <div class="todo-content">
+                        <input type="text" value="{{ task.title }}">
+                    </div>
+                    <div class="actions">
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="{% url 'todo:task_delete' task.id %}">Delete</a></li>
+                            <li><a class="dropdown-item" href="{% url 'todo:task_update' task.id %}">Edit</a></li>
+                        </ul>
+                    </div>
+                </div>
+                {% endif %}
             </div>
             {% endfor %}
         </section>
-
     </main>
-    <script src = "{% static 'app.js' %}"></script>
+
 </body>
 </html>

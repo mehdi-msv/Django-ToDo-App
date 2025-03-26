@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<!-- Created By CodingNepal -->
+<html lang="en" dir="ltr">
+   <head>
+      <meta charset="utf-8">
+      <title>Edit Task</title>
+      <link rel="stylesheet" href="{% static 'css/model.css' %}">
+   </head>
+   <body>
+      <div class="wrapper">
+         <div class="title">
+            Edit Task
+         </div>
+         <form action="{% url 'todo:task_update' pk=task.id%}" method="post">
+            {% csrf_token %}
+            <div class="field">
+               <input type="text" name='title' required>
+               <label>Edit Your Task</label>
+            </div>
+            <div class="field">
+               <input type="submit" value="Confirm">
+            </div>
+         </form>
+      </div>
+   </body>
+</html>

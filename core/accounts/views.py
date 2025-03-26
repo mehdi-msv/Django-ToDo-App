@@ -14,7 +14,7 @@ class CustomLoginView(LoginView):
     template_name = 'accounts/register.html'
     redirect_authenticated_user = True
     fields = 'username', 'password'
-    success_url = reverse_lazy('todo:tasks-list')
+    success_url = reverse_lazy('todo:tasks_list')
     
     def get_success_url(self):
         '''
@@ -30,7 +30,7 @@ class RegisterView(CreateView):
     model = User
     form_class = UserCreationForm
     template_name = 'accounts/register.html'
-    success_url = reverse_lazy('todo:tasks-list')
+    success_url = reverse_lazy('todo:tasks_list')
     
     def get(self, request, *args, **kwargs):
         '''
