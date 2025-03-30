@@ -16,7 +16,7 @@ class TaskListView(LoginRequiredMixin, ListView):
     context_object_name = 'tasks'
     
     def get_queryset(self):
-        return Task.objects.filter(user=self.request.user).order_by('-updated_date')
+        return Task.objects.filter(author=self.request.user).order_by('-updated_date')
 
 
 class TaskCompleteView(LoginRequiredMixin, UpdateView):
@@ -26,7 +26,7 @@ class TaskCompleteView(LoginRequiredMixin, UpdateView):
     model = Task
     success_url = reverse_lazy('todo:tasks_list')
     def get(self, request, *args, **kwargs):
-        task = get_object_or_404(Task, pk=kwargs.get('pk'),user=request.user)
+        task = get_object_or_404(Task, pk=kwargs.get('pk'),author=request.user)
         task.complete = not task.complete
         task.save()
 
@@ -41,7 +41,7 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
     fields = ['title']
     success_url = reverse_lazy('todo:tasks_list')
     def form_valid(self, form):
-        form.instance.user = self.request.user
+        form.instance.author = self.request.user
         return super(TaskCreateView,self).form_valid(form)
     def form_invalid(self, form):
         return redirect(self.success_url)
@@ -59,7 +59,7 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
         '''
         Filter tasks to only those belonging to the current user.
         '''
-        return self.model.objects.filter(user=self.request.user)
+        return self.model.objects.filter(author=self.request.user)
 
 class TaskDeleteView(LoginRequiredMixin, DeleteView):
     '''
@@ -74,4 +74,4 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
         '''
         Filter tasks to only those belonging to the current user.
         '''
-        return self.model.objects.filter(user=self.request.user)
+        return self.model.objects.filter(author=self.request.user)
