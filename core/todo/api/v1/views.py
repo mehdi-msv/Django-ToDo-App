@@ -1,12 +1,12 @@
 from rest_framework.viewsets import ModelViewSet
 from ...models import Task
 from .serializers import TaskSerializer
-from .permissions import IsOwnerOrReadOnly
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticated
 
 class TaskModelViewSet(ModelViewSet):
-    queryset = Task.objects.all()
     serializer_class = TaskSerializer
-    permission_classes = [IsOwnerOrReadOnly,  IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticated]
+    def get_queryset(self):
+        return Task.objects.filter(author=self.request.user)
     
     

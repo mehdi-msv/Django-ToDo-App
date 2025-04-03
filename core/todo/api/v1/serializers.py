@@ -5,11 +5,11 @@ from django.contrib.auth.models import User
 
 
 class TaskSerializer(serializers.ModelSerializer):
-    absolute_url = serializers.SerializerMethodField(read_only=True)
+    absolute_url = serializers.SerializerMethodField()
     class Meta:
         fields = ['id', 'author', 'title', 'complete', 'absolute_url', 'created_date', 'updated_date']
         model = Task
-        read_only_fields =['author']
+        read_only_fields =['author','absolute_url']
     def get_absolute_url(self,obj):
         requset = self.context.get('request')
         absolute_url = obj.get_absolute_api_url()
