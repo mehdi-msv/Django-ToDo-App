@@ -1,23 +1,19 @@
-asgiref==3.8.1
-attrs==25.3.0
-Django==4.2.20
-django-filter==25.1
-djangorestframework==3.16.0
-drf-yasg==1.21.10
-importlib_metadata==8.6.1
-importlib_resources==6.5.2
-inflection==0.5.1
-jsonschema==4.23.0
-jsonschema-specifications==2024.10.1
-Markdown==3.7
-packaging==24.2
+# Core Django & essential libraries
+Django==4.2.15
+pillow==10.4.0
+djangorestframework==3.15.2
 python-decouple==3.8
-pytz==2025.2
-PyYAML==6.0.2
-referencing==0.36.2
-rpds-py==0.24.0
-sqlparse==0.5.3
-swagger-spec-validator==3.0.4
-typing_extensions==4.12.2
-uritemplate==4.1.1
-zipp==3.21.0
+
+# Third-party tools for API and filtering
+django-filter==24.3
+Markdown==3.7
+drf-yasg[validation]
+djangorestframework_simplejwt
+
+# Deployment-related tools
+
+
+# Code quality, formatting, and testing
+black
+flake8
+flake8-django
