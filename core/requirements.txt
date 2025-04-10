@@ -17,3 +17,5 @@ djangorestframework_simplejwt
 black
 flake8
 flake8-django
+pytest
+pytest-django
