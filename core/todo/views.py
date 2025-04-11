@@ -19,9 +19,7 @@ class TaskListView(LoginRequiredMixin, ListView):
     context_object_name = "tasks"
 
     def get_queryset(self):
-        return Task.objects.filter(author=self.request.user).order_by(
-            "-updated_date"
-        )
+        return Task.objects.filter(author=self.request.user).order_by("-updated_date")
 
 
 class TaskCompleteView(LoginRequiredMixin, UpdateView):
@@ -33,9 +31,7 @@ class TaskCompleteView(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy("todo:tasks_list")
 
     def get(self, request, *args, **kwargs):
-        task = get_object_or_404(
-            Task, pk=kwargs.get("pk"), author=request.user
-        )
+        task = get_object_or_404(Task, pk=kwargs.get("pk"), author=request.user)
         task.complete = not task.complete
         task.save()
 
