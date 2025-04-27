@@ -4,6 +4,7 @@ import pytest
 
 # Create your tests here.
 
+
 @pytest.mark.django_db
 class TestEndpoints:
     @pytest.mark.parametrize(
@@ -18,7 +19,13 @@ class TestEndpoints:
         ],
     )
     def test_authenticated_user_status_codes(
-        self, method, url_name, expected_status, user_client, create_task, valid_data
+        self,
+        method,
+        url_name,
+        expected_status,
+        user_client,
+        create_task,
+        valid_data,
     ):
         """
         Test that the API endpoints return the expected status code.
@@ -28,12 +35,12 @@ class TestEndpoints:
             url = reverse(url_name, kwargs={"pk": task_id})
         else:
             url = reverse(url_name)
-                    
+
         if method in ["post", "put", "patch"]:
             response = getattr(user_client, method)(url, data=valid_data)
         else:
             response = getattr(user_client, method)(url)
-                    
+
         assert response.status_code == expected_status
 
     @pytest.mark.parametrize(
@@ -58,12 +65,12 @@ class TestEndpoints:
             url = reverse(url_name, kwargs={"pk": task_id})
         else:
             url = reverse(url_name)
-                    
+
         api_client.logout()
-                
+
         if method in ["post", "put", "patch"]:
             response = getattr(api_client, method)(url, data=valid_data)
         else:
             response = getattr(api_client, method)(url)
-                    
+
         assert response.status_code == 401

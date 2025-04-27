@@ -32,10 +32,12 @@ def user_client(api_client):
     """
     # Get the user model
     User = get_user_model()
-            
+
     # Create a test user
-    test_user = User.objects.create_user(username="testuser", password="testpassword123")
-            
+    test_user = User.objects.create_user(
+        username="testuser", password="testpassword123"
+    )
+
     # Authenticate the API client with the test user
     api_client.force_authenticate(user=test_user)
 

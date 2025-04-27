@@ -41,11 +41,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "accounts.apps.AccountsConfig",
-    "todo.apps.TodoConfig",
     "rest_framework",
     "rest_framework.authtoken",
     "drf_yasg",
+    "django_celery_beat",
+    "accounts.apps.AccountsConfig",
+    "todo.apps.TodoConfig",
 ]
 
 MIDDLEWARE = [
@@ -157,8 +158,18 @@ REST_FRAMEWORK = {
     ),
 }
 
-# JWT settings
+# JWT configuration
 
 SIMPLE_JWT = {
     "TOKEN_OBTAIN_SERIALIZER": "accounts.api.v1.serializers.CustomTokenObtainPairSerializer",
 }
+
+# Celery configuration
+
+CELERY_BROKER_URL = config(
+    "CELERY_BROKER_URL", default="redis://redis:6379/0"
+)
+
+CELERY_BEAT_SCHEDULER = config(
+    "CELERY_BEAT_SCHEDULER", default="django_celery_beat.schedulers.DatabaseScheduler"
+)
