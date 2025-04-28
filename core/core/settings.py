@@ -158,6 +158,14 @@ REST_FRAMEWORK = {
     ),
 }
 
+# Cors configuration
+
+CORS_ALLOWED_ORIGINS = config(
+    "CORS_ALLOWED_ORIGINS",
+    cast=lambda v: [s.strip() for s in v.split(",")],
+    default="http://127.0.0.1:5500",
+)
+
 # JWT configuration
 
 SIMPLE_JWT = {
