@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
 from todo.scheduler import setup_periodic_tasks
 
+
 class Command(BaseCommand):
     help = "Setup periodic tasks"
 
