@@ -179,5 +179,26 @@ CELERY_BROKER_URL = config(
 )
 
 CELERY_BEAT_SCHEDULER = config(
-    "CELERY_BEAT_SCHEDULER", default="django_celery_beat.schedulers.DatabaseScheduler"
+    "CELERY_BEAT_SCHEDULER",
+    default="django_celery_beat.schedulers.DatabaseScheduler",
+)
+
+# Caches configuration
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://redis:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+    }
+}
+
+# OpenWeatherMap API configuration
+
+OPENWEATHER_API_KEY = config("OPENWEATHER_API_KEY", default="Your_API_Key")
+OPENWEATHER_URL = config(
+    "OPENWEATHERMAP_URL",
+    default="http://api.openweathermap.org/data/2.5/weather",
 )
