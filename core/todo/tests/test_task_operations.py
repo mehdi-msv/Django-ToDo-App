@@ -28,7 +28,7 @@ class TestTaskOperations:
         api_client.post(url, data=valid_data)
         assert Task.objects.count() == 0
         assert Task.objects.last() is None
-        
+
     @pytest.mark.parametrize("method", ["put", "patch"])
     def test_update_task(self, user_client, create_task, valid_data, method):
         """
@@ -47,9 +47,11 @@ class TestTaskOperations:
         task = Task.objects.get(id=task_id)
         assert task.title == f"Updated Title with {method.upper()}"
         assert task.complete is True
-        
+
     @pytest.mark.parametrize("method", ["put", "patch"])
-    def test_anonymous_user_cannot_update_task(self, api_client, create_task, valid_data, method):
+    def test_anonymous_user_cannot_update_task(
+        self, api_client, create_task, valid_data, method
+    ):
         """
         Tests that an anonymous user cannot update a task via the API.
 
@@ -61,14 +63,14 @@ class TestTaskOperations:
         updated_data = valid_data.copy()
         updated_data["title"] = f"Updated Title with {method.upper()}"
         updated_data["complete"] = True
-        
+
         api_client.logout()
-        
+
         getattr(api_client, method)(url, data=updated_data)
         task = Task.objects.get(id=task_id)
         assert task.title == create_task.data["title"]
         assert task.complete is False
-        
+
     def test_delete_task(self, user_client, create_task):
         """
         Tests that a task can be successfully deleted via the API.
@@ -81,7 +83,7 @@ class TestTaskOperations:
 
         user_client.delete(url)
         assert not Task.objects.filter(id=task_id).exists()
-    
+
     def test_anonymous_user_cannot_delete_task(self, api_client, create_task):
         """
         Tests that an anonymous user cannot delete a task via the API.
@@ -95,10 +97,10 @@ class TestTaskOperations:
 
         # Log out the current user to simulate an anonymous user
         api_client.logout()
-        
+
         # Attempt to delete the task as an anonymous user
         api_client.delete(url)
-        
+
         # Verify that the task still exists in the database
         task = Task.objects.get(id=task_id)
         assert task is not None
