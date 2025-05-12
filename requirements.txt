@@ -12,7 +12,8 @@ djangorestframework_simplejwt
 django-coreapi
 
 # Deployment-related tools
-
+gunicorn
+psycopg2
 
 # Code quality, formatting, and testing
 black
@@ -21,3 +22,9 @@ flake8-django
 pytest
 pytest-django
 faker
+
+# background process & cache
+celery
+redis
+django-celery-beat
+django-redis
