@@ -12,7 +12,8 @@ djangorestframework_simplejwt
 django-coreapi
 
 # Deployment-related tools
-
+gunicorn
+psycopg2
 
 # Code quality, formatting, and testing
 black

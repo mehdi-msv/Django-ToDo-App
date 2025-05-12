@@ -11,12 +11,13 @@ COPY requirements.txt /app/
 
 RUN pip3 install --upgrade pip
 
-RUN apt-get update && apt-get install -y curl
+RUN apt-get update \
+    && apt-get install -y curl \
+    && apt-get install -y libpq-dev gcc \
+    && apt-get clean
 
 RUN pip3 install --timeout=120 --retries=20 --no-cache-dir -i https://pypi.org/simple -r requirements.txt
 
-COPY ./core /app/
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+RUN mkdir -p /app/logs
 
-ENTRYPOINT ["/entrypoint.sh"]
+COPY ./core /app/
