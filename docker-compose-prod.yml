@@ -92,6 +92,7 @@ services:
     restart: always
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./nginx:/etc/nginx/conf.d
       - static_volume:/home/app/static
