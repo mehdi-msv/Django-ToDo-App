@@ -1,5 +1,8 @@
 from .base import *
+
+# Logging
 from ..logging_config import LOGGING
+
 # Database
 DATABASES = {
     "default": {
@@ -32,5 +35,3 @@ SECURE_REFERRER_POLICY = "strict-origin"
 USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-# Logging
-LOGGING_CONFIG = LOGGING
