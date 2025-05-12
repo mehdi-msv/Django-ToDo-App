@@ -96,6 +96,7 @@ services:
       - ./nginx:/etc/nginx/conf.d
       - static_volume:/home/app/static
       - media_volume:/home/app/media
+      - /etc/letsencrypt:/etc/letsencrypt:ro
     depends_on:
       backend:
         condition: service_healthy
