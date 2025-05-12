@@ -11,4 +11,6 @@ class Command(BaseCommand):
         and deletes all completed tasks.
         """
         setup_periodic_tasks()
-        self.stdout.write(self.style.SUCCESS('Periodic tasks set up successfully.'))
+        self.stdout.write(
+            self.style.SUCCESS("Periodic tasks set up successfully.")
+        )
