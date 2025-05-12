@@ -15,7 +15,9 @@ class Command(BaseCommand):
         # Check if migrations are needed
         self.stdout.write("Checking for pending migrations...")
         if self._has_pending_migrations():
-            self.stdout.write("Pending migrations found. Applying migrations...")
+            self.stdout.write(
+                "Pending migrations found. Applying migrations..."
+            )
             # Make migrations
             self.stdout.write("Making migrations...")
             call_command("makemigrations")
@@ -24,21 +26,27 @@ class Command(BaseCommand):
             self.stdout.write("Applying migrations...")
             call_command("migrate")
         else:
-            self.stdout.write(self.style.SUCCESS("No pending migrations found."))
+            self.stdout.write(
+                self.style.SUCCESS("No pending migrations found.")
+            )
 
         # Collect static files
         self.stdout.write("Collecting static files...")
         call_command("collectstatic", "--noinput")
-        
+
         # Setup periodic tasks
         self.stdout.write("Setting up periodic tasks...")
         setup_periodic_tasks()
-        self.stdout.write(self.style.SUCCESS("Periodic tasks set up successfully."))
-        
         self.stdout.write(
-            self.style.SUCCESS("All preparation steps completed successfully.")
+            self.style.SUCCESS("Periodic tasks set up successfully.")
         )
-        
+
+        self.stdout.write(
+            self.style.SUCCESS(
+                "All preparation steps completed successfully."
+            )
+        )
+
     def _has_pending_migrations(self):
         """
         Check if there are any pending migrations.

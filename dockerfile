@@ -18,4 +18,6 @@ RUN apt-get update \
 
 RUN pip3 install --timeout=120 --retries=20 --no-cache-dir -i https://pypi.org/simple -r requirements.txt
 
+RUN mkdir -p /app/logs
+
 COPY ./core /app/
