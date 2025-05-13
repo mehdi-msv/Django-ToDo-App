@@ -34,4 +34,8 @@ jobs:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
-        script: ls
+        script: |
+          cd ${{ secrets.PROJECT_DIR }}
+          docker compose -f docker-compose-prod.yml down
+          git pull
+          docker compose -f docker-compose-prod.yml up -d --build
