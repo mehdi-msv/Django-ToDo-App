@@ -1,0 +1,41 @@
+name: Docker Image CI/CD
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  Test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Start containers
+      run: docker compose up -d
+    
+    - name: Run tests
+      run: docker compose exec backend sh -c "flake8 && pytest ."
+  
+  deploy:
+    if: ${{ always() && contains(join(needs.*.result, ','), 'success') }}
+    name: Deploy to Production
+    needs: Test
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: connect and execute commands
+      uses: appleboy/ssh-action@v0.1.0
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        script: |
+          cd ${{ secrets.PROJECT_DIR }}
+          docker compose -f docker-compose-prod.yml down
+          git pull
+          docker compose -f docker-compose-prod.yml up -d --build
