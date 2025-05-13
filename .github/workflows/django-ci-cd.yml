@@ -31,7 +31,7 @@ jobs:
     - name: connect and execute commands
       uses: appleboy/ssh-action@v0.1.0
       with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USERNAME }}
-        key: ${{ secrets.SSH_KEY }}
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
         script: ls
