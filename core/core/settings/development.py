@@ -1,10 +1,5 @@
 from .base import *
 
-# Development-specific settings
-DEBUG = True
-
-ALLOWED_HOSTS = ["*"]
-
 # Development database configuration
 DATABASES = {
     "default": {
